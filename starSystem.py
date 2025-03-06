@@ -66,5 +66,6 @@ class starSystem:
         return self.nlehmer.Lehmer() % (max - min + 1) + min
     
     def rndDouble(self, min, max):
-        return self.nlehmer.Lehmer() / 0xffffffff * (max - min) + min
+        return (self.nlehmer.Lehmer() % 0xffffffff) / 0xffffffff * (max - min) + min
+
 

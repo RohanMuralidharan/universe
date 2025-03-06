@@ -1,7 +1,7 @@
 import pygame
 from lehmer32 import Lehmer
 import math
-from starSystem import starSystem
+from starSystem import Planet, starSystem
 # from main import starSelected
 
 # Initialize pygame
@@ -102,22 +102,21 @@ def draw_star_info(selectedStar):
 
     # Draw planets and their moons
     max_distance = max((p.distance for p in selectedStar.planets), default=1)  # Avoid division by zero
-    start_x = star_x + selectedStar.starDiameter  # Start drawing planets after the star
+    start_x = star_x + ( selectedStar.starDiameter * 3 ) + 50 # Start drawing planets after the star
+    spacing = (panel_width - start_x - 50) // max(1, len(selectedStar.planets))  # Even spacing
 
-    for planet in selectedStar.planets:
 
-        spacing = (panel_width - start_x - 50) // max(1, len(selectedStar.planets))  # Avoid division by zero
-        for i, planet in enumerate(selectedStar.planets):
-            planet_x = start_x + i * spacing 
+    print("start")
+    for i, planet in enumerate(selectedStar.planets):
+        planet_x = start_x + i * spacing  # Evenly space planets
         planet_y = star_y
-        
-        # Draw the planet
-        print(f"Planet {planet.distance}: diameter={planet.diameter}, size={max(5, int(round(planet.diameter * 2)))}")
 
-        planet_size = max(5, int(round(planet.diameter * 2)))  # Always an integer
+        # Correctly calculate planet size based on its own diameter
+        planet_size = max(5, int(round(planet.diameter)))  # Use diameter directly
+        print(f"Planet {i}: diameter={planet.diameter}, size={planet_size}")
 
         pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)  # Green for planets
-        
+
         # Draw moons
         moon_angle_step = 360 // max(planet.moons, 1)  # Distribute moons in a circle
         moon_distance = planet_size + 8  # Offset from planet
@@ -126,13 +125,15 @@ def draw_star_info(selectedStar):
             angle = m * moon_angle_step
             moon_x = planet_x + int(moon_distance * math.cos(math.radians(angle)))
             moon_y = planet_y + int(moon_distance * math.sin(math.radians(angle)))
-            moon_y = planet_y + int(moon_distance * math.sin(math.radians(angle)))
             pygame.draw.circle(panel, (200, 200, 200), (moon_x, moon_y), 3)  # Gray for moons
         
         # Label planets
         planet_text = font.render(f"P{planet.distance:.1f}", True, (255, 255, 255))
         panel.blit(planet_text, (planet_x - 10, planet_y + planet_size + 5))
 
+
+        start_x += planet_size + 10
+    print("end")
     # Blit panel to screen
     screen.blit(panel, (panel_x, panel_y))
 # Game loop

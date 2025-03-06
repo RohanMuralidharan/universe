@@ -34,6 +34,14 @@
         "documentation": {}
     },
     {
+        "label": "Planet",
+        "importPath": "starSystem",
+        "description": "starSystem",
+        "isExtraImport": true,
+        "detail": "starSystem",
+        "documentation": {}
+    },
+    {
         "label": "starSystem",
         "importPath": "starSystem",
         "description": "starSystem",
