@@ -63,7 +63,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds\n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime\n    if keys[pygame.K_RIGHT]:\n        galaxyOffset[0] += speed * elapsedTime",
+        "peekOfCode": "def draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime\n    if keys[pygame.K_RIGHT]:\n        galaxyOffset[0] += speed * elapsedTime",
         "detail": "main",
         "documentation": {}
     },
@@ -72,7 +72,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def draw_star_info(selectedStar):\n    if not selectedStar:\n        return\n    \"\"\" Draws the planet and moon details in a panel. \"\"\"\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500 \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)",
+        "peekOfCode": "def draw_star_info(selectedStar):\n    global hoveredPlanet\n    if not selectedStar:\n        return\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500  \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)",
         "detail": "main",
         "documentation": {}
     },
@@ -81,7 +81,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "GRID_SIZE = 50\nFPS = 120\nBACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False",
+        "peekOfCode": "GRID_SIZE = 50\nFPS = 120\nBACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]",
         "detail": "main",
         "documentation": {}
     },
@@ -90,7 +90,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FPS = 120\nBACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]",
+        "peekOfCode": "FPS = 120\nBACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None",
         "detail": "main",
         "documentation": {}
     },
@@ -99,7 +99,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "BACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None",
+        "peekOfCode": "BACKGROUND_COLOR = (0, 0, 0)\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None",
         "detail": "main",
         "documentation": {}
     },
@@ -108,7 +108,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "screen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global",
+        "peekOfCode": "screen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet",
         "detail": "main",
         "documentation": {}
     },
@@ -117,7 +117,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "clock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds",
+        "peekOfCode": "clock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  ",
         "detail": "main",
         "documentation": {}
     },
@@ -126,7 +126,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "galaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds\n    # Move galaxy offset",
+        "peekOfCode": "galaxyOffset = [0, 0]\nstarSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  ",
         "detail": "main",
         "documentation": {}
     },
@@ -135,7 +135,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "starSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds\n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:",
+        "peekOfCode": "starSelected = False\nvStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset",
         "detail": "main",
         "documentation": {}
     },
@@ -144,7 +144,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "vStarSelected = [0, 0]\nselectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds\n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime",
+        "peekOfCode": "vStarSelected = [0, 0]\nselectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:",
         "detail": "main",
         "documentation": {}
     },
@@ -153,7 +153,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "selectedStar = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar # Declare them as global\n    keys = pygame.key.get_pressed()\n    speed = 100  # Movement speed in pixels per second\n    elapsedTime = clock.get_time() / 24  # Convert to seconds\n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime\n    if keys[pygame.K_RIGHT]:",
+        "peekOfCode": "selectedStar = None\nhoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "hoveredPlanet",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "hoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime\n    if keys[pygame.K_RIGHT]:",
         "detail": "main",
         "documentation": {}
     },
@@ -180,7 +189,7 @@
         "kind": 6,
         "importPath": "starSystem",
         "description": "starSystem",
-        "peekOfCode": "class starSystem:\n    def __init__(self, x, y, z=0, generateFullSystem=False):\n        self.x = x\n        self.y = y\n        self.z = z\n        self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))\n        self.starExists = self.rndInt(0, 20) == 1\n        if(not self.starExists):\n            return;\n        self.starDiameter = self.rndInt(10, 40)",
+        "peekOfCode": "class starSystem:\n    def __init__(self, x, y, z=f\"ASTv{15}\", generateFullSystem=False):\n        self.x = x\n        self.y = y\n        self.name = z\n        self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))\n        self.starExists = self.rndInt(0, 20) == 1\n        self.temperature = self.rndInt(2000, 50000)\n        self.type = \"O\" if self.temperature > 30000 else \"B\" if self.temperature > 10000 else \"A\" if self.temperature > 7500 else \"F\" if self.temperature > 6000 else \"G\" if self.temperature > 5000 else \"K\" if self.temperature > 3500 else \"M\"\n        if(not self.starExists):",
         "detail": "starSystem",
         "documentation": {}
     }

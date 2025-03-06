@@ -16,12 +16,14 @@ class Planet:
         self.Moons = []
         self.gravity = 0.0
 class starSystem:
-    def __init__(self, x, y, z=0, generateFullSystem=False):
+    def __init__(self, x, y, z=f"ASTv{15}", generateFullSystem=False):
         self.x = x
         self.y = y
-        self.z = z
+        self.name = z
         self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))
         self.starExists = self.rndInt(0, 20) == 1
+        self.temperature = self.rndInt(2000, 50000)
+        self.type = "O" if self.temperature > 30000 else "B" if self.temperature > 10000 else "A" if self.temperature > 7500 else "F" if self.temperature > 6000 else "G" if self.temperature > 5000 else "K" if self.temperature > 3500 else "M"
 
         if(not self.starExists):
             return;
