@@ -1,12 +1,14 @@
 import pygame
 from lehmer32 import Lehmer
+import math
 from starSystem import starSystem
+# from main import starSelected
 
 # Initialize pygame
 pygame.init()
 
 # Constants
-WIDTH, HEIGHT = 1024, 1024
+WIDTH, HEIGHT = 1000, 1000
 GRID_SIZE = 50
 FPS = 120
 BACKGROUND_COLOR = (0, 0, 0)
@@ -77,41 +79,62 @@ def draw():
                         vStarSelected = [world_x, world_y]
 
                         print(f"Star selected at: {vStarSelected}")
+
     if starSelected and selectedStar:
         draw_star_info(selectedStar)
 
 # TODO: Chnage this shit:
 def draw_star_info(selectedStar):
     """ Draws the planet and moon details in a panel. """
-    panel_width, panel_height = 300, 400
-    panel_x, panel_y = WIDTH - panel_width - 20, 20
+    panel_width, panel_height = 1000, 500
+    panel_x, panel_y = 0, 500 
 
     panel = pygame.Surface((panel_width, panel_height))
     panel.fill((50, 50, 50))
 
     font = pygame.font.Font(None, 24)
-    title_text = font.render(f"Star System", True, (255, 255, 255))
+    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)
+    star_y = panel_height // 2
+    pygame.draw.circle(panel, selectedStar.starColor, (star_x, star_y), selectedStar.starDiameter * 3)
+    
+    title_text = font.render("Star System", True, (255, 255, 255))
     panel.blit(title_text, (10, 10))
 
-    y_offset = 40
-    for i, planet in enumerate(selectedStar.planets):
-        planet_text = font.render(f"Planet {i+1} - Size: {planet.diameter:.1f}", True, (200, 200, 200))
-        panel.blit(planet_text, (10, y_offset))
-        y_offset += 25
+    # Draw planets and their moons
+    max_distance = max((p.distance for p in selectedStar.planets), default=1)  # Avoid division by zero
+    start_x = star_x + selectedStar.starDiameter  # Start drawing planets after the star
 
-        moon_text = font.render(f" Moons: {planet.moons}", True, (180, 180, 180))
-        panel.blit(moon_text, (20, y_offset))
-        y_offset += 20
+    for planet in selectedStar.planets:
 
+        spacing = (panel_width - start_x - 50) // max(1, len(selectedStar.planets))  # Avoid division by zero
+        for i, planet in enumerate(selectedStar.planets):
+            planet_x = start_x + i * spacing 
+        planet_y = star_y
+        
+        # Draw the planet
+        print(f"Planet {planet.distance}: diameter={planet.diameter}, size={max(5, int(round(planet.diameter * 2)))}")
+
+        planet_size = max(5, int(round(planet.diameter * 2)))  # Always an integer
+
+        pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)  # Green for planets
+        
+        # Draw moons
+        moon_angle_step = 360 // max(planet.moons, 1)  # Distribute moons in a circle
+        moon_distance = planet_size + 8  # Offset from planet
+        
+        for m in range(planet.moons):
+            angle = m * moon_angle_step
+            moon_x = planet_x + int(moon_distance * math.cos(math.radians(angle)))
+            moon_y = planet_y + int(moon_distance * math.sin(math.radians(angle)))
+            moon_y = planet_y + int(moon_distance * math.sin(math.radians(angle)))
+            pygame.draw.circle(panel, (200, 200, 200), (moon_x, moon_y), 3)  # Gray for moons
+        
+        # Label planets
+        planet_text = font.render(f"P{planet.distance:.1f}", True, (255, 255, 255))
+        panel.blit(planet_text, (planet_x - 10, planet_y + planet_size + 5))
+
+    # Blit panel to screen
     screen.blit(panel, (panel_x, panel_y))
-
-
-    # Draw selected star highlight
-    if starSelected:
-        selected_screen_x = (vStarSelected[0] - galaxyOffset[0] // GRID_SIZE) * GRID_SIZE
-        selected_screen_y = (vStarSelected[1] - galaxyOffset[1] // GRID_SIZE) * GRID_SIZE
-        pygame.draw.circle(screen, (255, 255, 0), (selected_screen_x, selected_screen_y), 5)  # Small highlight
-
 # Game loop
 running = True
 while running:

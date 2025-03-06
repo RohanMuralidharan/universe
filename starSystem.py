@@ -40,7 +40,8 @@ class starSystem:
         for i in range(self.nPlanets):
             p = Planet()
             p.distance = self.distanceFromStar + i * self.rndDouble(10, 30)
-            p.diameter = self.rndDouble(2, 22)
+            p.diameter = max(2, min(self.rndDouble(2, 22), 22))  # Keep within expected range
+
             p.foilage = self.rndDouble(0, 1)
             p.minerals = self.rndDouble(0, 1)
             p.water = self.rndDouble(0, 1)

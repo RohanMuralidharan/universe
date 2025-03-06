@@ -25,6 +25,15 @@
         "documentation": {}
     },
     {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
         "label": "starSystem",
         "importPath": "starSystem",
         "description": "starSystem",
@@ -55,7 +64,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def draw_star_info(selectedStar):\n    \"\"\" Draws the planet and moon details in a panel. \"\"\"\n    panel_width, panel_height = 300, 400\n    panel_x, panel_y = WIDTH - panel_width - 20, 20\n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    title_text = font.render(f\"Star System\", True, (255, 255, 255))\n    panel.blit(title_text, (10, 10))\n    y_offset = 40",
+        "peekOfCode": "def draw_star_info(selectedStar):\n    \"\"\" Draws the planet and moon details in a panel. \"\"\"\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500 \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)\n    star_y = panel_height // 2\n    pygame.draw.circle(panel, selectedStar.starColor, (star_x, star_y), selectedStar.starDiameter * 3)",
         "detail": "main",
         "documentation": {}
     },
