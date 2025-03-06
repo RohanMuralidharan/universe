@@ -1,0 +1,116 @@
+[
+    {
+        "label": "pygame",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pygame",
+        "description": "pygame",
+        "detail": "pygame",
+        "documentation": {}
+    },
+    {
+        "label": "Lehmer",
+        "importPath": "lehmer32",
+        "description": "lehmer32",
+        "isExtraImport": true,
+        "detail": "lehmer32",
+        "documentation": {}
+    },
+    {
+        "label": "Lehmer",
+        "importPath": "lehmer32",
+        "description": "lehmer32",
+        "isExtraImport": true,
+        "detail": "lehmer32",
+        "documentation": {}
+    },
+    {
+        "label": "starSystem",
+        "importPath": "starSystem",
+        "description": "starSystem",
+        "isExtraImport": true,
+        "detail": "starSystem",
+        "documentation": {}
+    },
+    {
+        "label": "Lehmer",
+        "kind": 6,
+        "importPath": "lehmer32",
+        "description": "lehmer32",
+        "peekOfCode": "class Lehmer:\n    def __init__(self, num=0):\n        self.nLehmer = num\n    def seed(self, num):\n        self.nLehmer = num\n    def Lehmer(self):\n        self.nLehmer += 0xe120fc15\n        tmp =  self.nLehmer * 0x4a39b70d\n        m1 = tmp >> 32 ^ tmp\n        tmp =  m1 * 0x1fad5c9",
+        "detail": "lehmer32",
+        "documentation": {}
+    },
+    {
+        "label": "draw",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def draw():\n    keys = pygame.key.get_pressed()\n    speed = 1\n    elapsedTime = clock.get_time() / 100\n    if(keys[pygame.K_LEFT]):\n       galaxyOffset[0] -= speed * elapsedTime\n    if(keys[pygame.K_RIGHT]):\n       galaxyOffset[0] += speed * elapsedTime\n    if(keys[pygame.K_UP]):\n       galaxyOffset[1] -= speed * elapsedTime",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "FPS",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "FPS = 60  # Frames per second\nBACKGROUND_COLOR = (0, 0, 0)  # Dark blue background\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\ndef draw():\n    keys = pygame.key.get_pressed()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "BACKGROUND_COLOR",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "BACKGROUND_COLOR = (0, 0, 0)  # Dark blue background\n# Set up the screen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\ndef draw():\n    keys = pygame.key.get_pressed()\n    speed = 1",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "screen",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "screen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Simulating a universe\")\n# Clock to control frame rate\nclock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\ndef draw():\n    keys = pygame.key.get_pressed()\n    speed = 1\n    elapsedTime = clock.get_time() / 100\n    if(keys[pygame.K_LEFT]):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "clock",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "clock = pygame.time.Clock()\ngalaxyOffset = [0, 0]\ndef draw():\n    keys = pygame.key.get_pressed()\n    speed = 1\n    elapsedTime = clock.get_time() / 100\n    if(keys[pygame.K_LEFT]):\n       galaxyOffset[0] -= speed * elapsedTime\n    if(keys[pygame.K_RIGHT]):\n       galaxyOffset[0] += speed * elapsedTime",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "galaxyOffset",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "galaxyOffset = [0, 0]\ndef draw():\n    keys = pygame.key.get_pressed()\n    speed = 1\n    elapsedTime = clock.get_time() / 100\n    if(keys[pygame.K_LEFT]):\n       galaxyOffset[0] -= speed * elapsedTime\n    if(keys[pygame.K_RIGHT]):\n       galaxyOffset[0] += speed * elapsedTime\n    if(keys[pygame.K_UP]):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "running",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "running = True\nwhile running:\n    # Event handling\n    for event in pygame.event.get():\n        if event.type == pygame.QUIT:  # Close the game\n            running = False\n    # Game logic (update objects here)\n    # # Drawing\n    # screen.fill(BACKGROUND_COLOR)  # Clear the screen\n    # # pygame.draw.circle(screen, (255, 255, 0), (WIDTH // 2, HEIGHT // 2), 50)  # Example: Draw a yellow circle",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "starSystem",
+        "kind": 6,
+        "importPath": "starSystem",
+        "description": "starSystem",
+        "peekOfCode": "class starSystem:\n    def __init__(self, x, y, z=0):\n        self.x = x\n        self.y = y\n        self.z = z\n        self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))\n        self.starExists = self.rndInt(0, 20) > 18\n        if(not self.starExists):\n            return;\n        self.starDiameter = self.rndInt(8, 30)",
+        "detail": "starSystem",
+        "documentation": {}
+    }
+]
