@@ -21,20 +21,31 @@ class starSystem:
         self.y = y
         self.z = z
         self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))
-        self.starExists = self.rndInt(0, 20) > 18
+        self.starExists = self.rndInt(0, 20) == 1
 
         if(not self.starExists):
             return;
     
         self.starDiameter = self.rndInt(10, 40)
-        self.colors = [0xffffffff, 0xffd9ffff, 0xffa3ffff, 0xffffc8c8, 0xffffcb9d, 0xff415eff, 0xff28199d]
+        self.colors = [
+            0xffad6242,  # Mars-like (Rusty Red)
+            0xffc2b280,  # Earth-like (Sandy Desert)
+            0xff8c92ac,  # Mercury-like (Dark Gray)
+            0xffddb887,  # Venus-like (Pale Yellowish)
+            0xff705b3e,  # Titan-like (Brownish)
+            0xff546a76,  # Neptune-like (Muted Cyan)
+            0xffe6b800,  # Io-like (Sulfur Yellow)
+            0xffc1440e,  # Jupiter-like Bands (Reddish-Orange)
+            0xff6a0dad,  # Exotic Purple Planet
+            0xff228b22,  # Verdant Green (Alien Forest)
+        ]
         self.starColor = self.colors[self.rndInt(0, len(self.colors) - 1)]
 
         if(not generateFullSystem):
             return
         
         self.distanceFromStar = self.rndInt(60, 200)
-        self.nPlanets = self.rndInt(0, 12)
+        self.nPlanets = self.rndInt(0, 9)
         self.planets = []
         
         for i in range(self.nPlanets):

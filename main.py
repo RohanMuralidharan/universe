@@ -108,7 +108,7 @@ def draw_star_info(selectedStar):
 
     print("start")
     for i, planet in enumerate(selectedStar.planets):
-        planet_x = start_x + i * spacing  # Evenly space planets
+        planet_x = start_x + i * (spacing) # Evenly space planets
         planet_y = star_y
 
         # Correctly calculate planet size based on its own diameter

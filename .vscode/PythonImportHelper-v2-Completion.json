@@ -180,7 +180,7 @@
         "kind": 6,
         "importPath": "starSystem",
         "description": "starSystem",
-        "peekOfCode": "class starSystem:\n    def __init__(self, x, y, z=0, generateFullSystem=False):\n        self.x = x\n        self.y = y\n        self.z = z\n        self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))\n        self.starExists = self.rndInt(0, 20) > 18\n        if(not self.starExists):\n            return;\n        self.starDiameter = self.rndInt(10, 40)",
+        "peekOfCode": "class starSystem:\n    def __init__(self, x, y, z=0, generateFullSystem=False):\n        self.x = x\n        self.y = y\n        self.z = z\n        self.nlehmer = Lehmer((int(x) & 0xffff) << 16 | (int(y) & 0xffff))\n        self.starExists = self.rndInt(0, 20) == 1\n        if(not self.starExists):\n            return;\n        self.starDiameter = self.rndInt(10, 40)",
         "detail": "starSystem",
         "documentation": {}
     }
