@@ -80,11 +80,13 @@ def draw():
 
                         print(f"Star selected at: {vStarSelected}")
 
-    if starSelected and selectedStar:
+    if starSelected:
         draw_star_info(selectedStar)
 
 # TODO: Chnage this shit:
 def draw_star_info(selectedStar):
+    if not selectedStar:
+        return
     """ Draws the planet and moon details in a panel. """
     panel_width, panel_height = 1000, 500
     panel_x, panel_y = 0, 500 
@@ -102,37 +104,38 @@ def draw_star_info(selectedStar):
 
     # Draw planets and their moons
     max_distance = max((p.distance for p in selectedStar.planets), default=1)  # Avoid division by zero
-    start_x = star_x + ( selectedStar.starDiameter * 3 ) + 50 # Start drawing planets after the star
+    start_x = star_x + (selectedStar.starDiameter * 3) + 50  # Start drawing planets after the star
     spacing = (panel_width - start_x - 50) // max(1, len(selectedStar.planets))  # Even spacing
 
-
-    print("start")
     for i, planet in enumerate(selectedStar.planets):
-        planet_x = start_x + i * (spacing) # Evenly space planets
+        planet_x = start_x + i * spacing  # Evenly space planets
         planet_y = star_y
 
-        # Correctly calculate planet size based on its own diameter
-        planet_size = max(5, int(round(planet.diameter)))  # Use diameter directly
-        print(f"Planet {i}: diameter={planet.diameter}, size={planet_size}")
+        # Correctly calculate planet size
+        planet_size = max(5, int(round(planet.diameter)))
 
-        pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)  # Green for planets
+        # Draw planet
+        pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)
 
-        # Draw moons
-        moon_angle_step = 360 // max(planet.moons, 1)  # Distribute moons in a circle
-        moon_distance = planet_size + 8  # Offset from planet
-        
-        for m in range(planet.moons):
-            angle = m * moon_angle_step
-            moon_x = planet_x + int(moon_distance * math.cos(math.radians(angle)))
-            moon_y = planet_y + int(moon_distance * math.sin(math.radians(angle)))
+        # Draw ring if planet has one
+        if hasattr(planet, 'ring') and planet.ring:
+            pygame.draw.ellipse(panel, (200, 200, 200), 
+                (planet_x - planet_size - 5, planet_y - planet_size // 4, (planet_size + 5) * 2, planet_size // 2), 2)
+
+        # Draw stacked moons above the planet
+        moon_x = planet_x
+        moon_y = planet_y - planet_size - 10  # Start above the planet
+        for _ in range(planet.moons):
             pygame.draw.circle(panel, (200, 200, 200), (moon_x, moon_y), 3)  # Gray for moons
-        
+            moon_y -= 10  # Stack them vertically
+
         # Label planets
         planet_text = font.render(f"P{planet.distance:.1f}", True, (255, 255, 255))
         panel.blit(planet_text, (planet_x - 10, planet_y + planet_size + 5))
 
+    # Blit panel to screen
+    screen.blit(panel, (panel_x, panel_y))
 
-        start_x += planet_size + 10
     print("end")
     # Blit panel to screen
     screen.blit(panel, (panel_x, panel_y))

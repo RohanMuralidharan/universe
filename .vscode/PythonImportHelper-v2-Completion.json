@@ -72,7 +72,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def draw_star_info(selectedStar):\n    \"\"\" Draws the planet and moon details in a panel. \"\"\"\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500 \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)\n    star_y = panel_height // 2\n    pygame.draw.circle(panel, selectedStar.starColor, (star_x, star_y), selectedStar.starDiameter * 3)",
+        "peekOfCode": "def draw_star_info(selectedStar):\n    if not selectedStar:\n        return\n    \"\"\" Draws the planet and moon details in a panel. \"\"\"\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500 \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)",
         "detail": "main",
         "documentation": {}
     },

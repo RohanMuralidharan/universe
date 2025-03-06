@@ -62,7 +62,7 @@ class starSystem:
             p.ring = self.rndInt(0, 20) > 18
             p.population = self.rndInt(0, 1000000000)
             p.gravity = self.rndDouble(0, 20)
-            p.moons = max(self.rndInt(-5, 10), 0)
+            p.moons = max(self.rndInt(-5, 7), 0)
 
             for i in range(p.moons):
                 p.Moons.append(self.rndDouble(1, 5))
