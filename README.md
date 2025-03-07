@@ -37,12 +37,10 @@ pip install pygame
 
 ## Screenshots
 
-    ![ Procedurally generated system of stars
-    ](images/image.png)
-
-    ![Can select a star to view it's star system set up](images/image1.png)
-
-    ![Can select planets to view it in detail](images/image2.png)
+    ![Procedurally generated system of stars](images/image.png)
+    ![Can select a star to view its star system setup](images/image1.png)
+    ![Can select a star to view its star system set up](images/image1.png)
+    ![Can select planets to view them in detail](images/image2.png)
 
 ## License
 
