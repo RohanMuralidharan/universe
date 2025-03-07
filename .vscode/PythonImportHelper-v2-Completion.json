@@ -72,7 +72,16 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def draw_star_info(selectedStar):\n    global hoveredPlanet\n    if not selectedStar:\n        return\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500  \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)\n    star_x = int((selectedStar.starDiameter * 3 / 2) + 100)",
+        "peekOfCode": "def draw_star_info(selectedStar):\n    global hoveredPlanet\n    if not selectedStar:\n        return\n    selected_planet = None\n    panel_width, panel_height = 1000, 500\n    panel_x, panel_y = 0, 500  \n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((50, 50, 50))\n    font = pygame.font.Font(None, 24)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "draw_planet_info",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def draw_planet_info(planet):\n    global planetOffset\n    panel_width, panel_height = 1000, 1000\n    panel_x, panel_y = 0, 0\n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((0, 0, 0))\n    font = pygame.font.Font(None, 24)\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  ",
         "detail": "main",
         "documentation": {}
     },
@@ -163,6 +172,15 @@
         "importPath": "main",
         "description": "main",
         "peekOfCode": "hoveredPlanet = None\ndef draw():\n    global starSelected, vStarSelected, selectedStar, hoveredPlanet\n    keys = pygame.key.get_pressed()\n    speed = 100  \n    elapsedTime = clock.get_time() / 24  \n    # Move galaxy offset\n    if keys[pygame.K_LEFT]:\n        galaxyOffset[0] -= speed * elapsedTime\n    if keys[pygame.K_RIGHT]:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "planetOffset",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "planetOffset = [0, 0]\ndef draw_planet_info(planet):\n    global planetOffset\n    panel_width, panel_height = 1000, 1000\n    panel_x, panel_y = 0, 0\n    panel = pygame.Surface((panel_width, panel_height))\n    panel.fill((0, 0, 0))\n    font = pygame.font.Font(None, 24)\n    keys = pygame.key.get_pressed()\n    speed = 100  ",
         "detail": "main",
         "documentation": {}
     },
