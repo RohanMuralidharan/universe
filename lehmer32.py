@@ -12,3 +12,9 @@ class Lehmer:
         tmp =  m1 * 0x1fad5c9
         m2 = tmp >> 32 ^ tmp
         return m2
+    
+    def randInt(self, min_val, max_val):
+        return min_val + self.Lehmer() % (max_val - min_val + 1)
+
+    def uniform(self, min_val, max_val):
+        return min_val + (self.Lehmer() / 0xFFFFFFFFFFFFFFFF) * (max_val - min_val)

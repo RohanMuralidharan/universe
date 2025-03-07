@@ -91,7 +91,7 @@ def draw_star_info(selectedStar):
 
     if not selectedStar:
         return
-
+    selected_planet = None
     panel_width, panel_height = 1000, 500
     panel_x, panel_y = 0, 500  
 
@@ -173,7 +173,88 @@ def draw_star_info(selectedStar):
             panel.blit(detail_render, (10, y_offset))
             y_offset += 20
 
+            if pygame.mouse.get_pressed()[0] and hoveredPlanet:
+                selected_planet = hoveredPlanet
+                
+    if selected_planet:
+        stay = True
+        while stay:
+            stay = draw_planet_info(selected_planet)
+
     screen.blit(panel, (panel_x, panel_y))
+
+planetOffset = [0, 0]
+
+def draw_planet_info(planet):
+    global planetOffset
+
+    panel_width, panel_height = 1000, 1000
+    panel_x, panel_y = 0, 0
+
+    panel = pygame.Surface((panel_width, panel_height))
+    panel.fill((0, 0, 0))
+
+    font = pygame.font.Font(None, 24)
+
+    keys = pygame.key.get_pressed()
+    speed = 100  
+    elapsedTime = clock.get_time() / 24  
+
+    if keys[pygame.K_LEFT]:
+        planetOffset[0] += speed * elapsedTime
+    if keys[pygame.K_RIGHT]:
+        planetOffset[0] -= speed * elapsedTime
+    if keys[pygame.K_UP]:
+        planetOffset[1] -= speed * elapsedTime
+    if keys[pygame.K_DOWN]:
+        planetOffset[1] += speed * elapsedTime
+
+    planet_x = panel_width // 2 + planetOffset[0]
+    planet_y = panel_height // 2 + planetOffset[1]
+
+    planet_size = max(400, int(round(planet.diameter)) * 4)
+
+    pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)
+
+    lehmer = Lehmer(int(planet.diameter))
+    for _ in range(planet.moons):
+        moon_distance = lehmer.randInt(planet_size + 300, planet_size + 500)
+        moon_angle = lehmer.uniform(0, 2 * math.pi)
+        moon_size = lehmer.randInt(15, 60)
+
+        moon_x = planet_x + int(moon_distance * math.cos(moon_angle))
+        moon_y = planet_y + int(moon_distance * math.sin(moon_angle))
+
+        pygame.draw.circle(panel, (200, 200, 200), (moon_x, moon_y), moon_size)
+
+    title_text = font.render("Planet Details", True, (255, 255, 255))
+    panel.blit(title_text, (10, 10))
+
+    planet_details = [
+        f"Distance: {planet.distance:.1f} AU",
+        f"Diameter: {planet.diameter:.1f} million km",
+        f"Moons: {planet.moons}",
+        f"Has Rings: {'Yes' if hasattr(planet, 'ring') and planet.ring else 'No'}"
+    ]
+
+    y_offset = 40
+    for line in planet_details:
+        detail_render = font.render(line, True, (255, 255, 255))
+        panel.blit(detail_render, (10, y_offset))
+        y_offset += 20
+
+    screen.blit(panel, (panel_x, panel_y))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            return False
+
+    pygame.display.flip()
+    clock.tick(FPS)
+    return True
 
 running = True
 while running:
