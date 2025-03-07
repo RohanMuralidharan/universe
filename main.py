@@ -131,13 +131,49 @@ def draw_star_info(selectedStar):
     spacing = (panel_width - start_x - 50) // max(1, len(selectedStar.planets))
 
     for i, planet in enumerate(selectedStar.planets):
+        # Define realistic planet colors
+        planet_colors = [
+            (139, 69, 19),   # Brown
+            (160, 82, 45),   # Sienna
+            (205, 133, 63),  # Peru
+            (210, 180, 140), # Tan
+            (244, 164, 96),  # Sandy Brown
+            (222, 184, 135), # Burly Wood
+            (255, 228, 181), # Moccasin
+            (255, 222, 173), # Navajo White
+            (255, 218, 185), # Peach Puff
+            (255, 228, 196), # Bisque
+            (255, 235, 205), # Blanched Almond
+            (255, 239, 213), # Papaya Whip
+            (255, 245, 238), # Seashell
+            (255, 250, 240), # Floral White
+            (255, 255, 240), # Ivory
+            (240, 255, 255), # Azure
+            (240, 248, 255), # Alice Blue
+            (230, 230, 250), # Lavender
+            (255, 240, 245), # Lavender Blush
+            (255, 228, 225), # Misty Rose
+            (128, 0, 128),   # Purple
+            (0, 128, 0),     # Green
+            (0, 255, 255),   # Cyan
+            (255, 0, 255),   # Magenta
+            (255, 165, 0),   # Orange
+            (255, 20, 147),  # Deep Pink
+            (75, 0, 130),    # Indigo
+            (0, 255, 0),     # Lime
+            (255, 255, 0)    # Yellow
+        ]
+
+        lehmer = Lehmer(int(planet.diameter))
+        planet.color = planet_colors[lehmer.randInt(0, len(planet_colors) - 1)]
+
         planet_x = start_x + i * spacing
         planet_y = star_y
         planet_size = max(5, int(round(planet.diameter)))
 
         planet_rect = pygame.Rect(planet_x - planet_size, planet_y - planet_size, planet_size * 2, planet_size * 2)
 
-        pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)
+        pygame.draw.circle(panel, planet.color , (planet_x, planet_y), planet_size)
 
         if hasattr(planet, 'ring') and planet.ring:
             pygame.draw.ellipse(panel, (200, 200, 200), 
@@ -205,22 +241,51 @@ def draw_planet_info(planet):
     if keys[pygame.K_RIGHT]:
         planetOffset[0] -= speed * elapsedTime
     if keys[pygame.K_UP]:
-        planetOffset[1] -= speed * elapsedTime
-    if keys[pygame.K_DOWN]:
         planetOffset[1] += speed * elapsedTime
+    if keys[pygame.K_DOWN]:
+        planetOffset[1] -= speed * elapsedTime
 
     planet_x = panel_width // 2 + planetOffset[0]
     planet_y = panel_height // 2 + planetOffset[1]
 
     planet_size = max(400, int(round(planet.diameter)) * 4)
 
-    pygame.draw.circle(panel, (0, 255, 0), (planet_x, planet_y), planet_size)
+
+    if hasattr(planet, 'ring') and planet.ring:
+
+        ring_colors = [
+            (169, 169, 169),  # Dark Gray
+            (211, 211, 211),  # Light Gray
+            (192, 192, 192),  # Silver
+            (255, 215, 0),    # Gold
+            (205, 133, 63),   # Peru
+            (255, 165, 0),    # Orange
+            (255, 69, 0),     # Red-Orange
+            (255, 255, 255)   # White
+        ]
+
+        lhmr = Lehmer(int(planet.diameter))
+        ring_color = ring_colors[lhmr.randInt(0, len(ring_colors) - 1)]
+        ring_thickness = lhmr.randInt(15, 50)
+
+        # Draw the back part of the ring (hidden behind the planet)
+        pygame.draw.arc(panel, ring_color, 
+            (planet_x - planet_size - 40, planet_y - planet_size // 4, (planet_size + 40) * 2, planet_size // 2), 
+            math.pi, 2 * math.pi, ring_thickness)
+        # Draw the planet on top to hide the back part of the ring
+        pygame.draw.circle(panel, planet.color, (planet_x, planet_y), planet_size)
+        # Draw the front part of the ring
+        pygame.draw.arc(panel, ring_color, 
+            (planet_x - planet_size - 40, planet_y - planet_size // 4, (planet_size + 40) * 2, planet_size // 2), 
+            0, math.pi, 15)
+    else:
+        pygame.draw.circle(panel, planet.color, (planet_x, planet_y), planet_size)
 
     lehmer = Lehmer(int(planet.diameter))
     for _ in range(planet.moons):
-        moon_distance = lehmer.randInt(planet_size + 300, planet_size + 500)
+        moon_distance = lehmer.randInt(planet_size + 150, planet_size + 300)
         moon_angle = lehmer.uniform(0, 2 * math.pi)
-        moon_size = lehmer.randInt(15, 60)
+        moon_size = lehmer.randInt(15, 30)
 
         moon_x = planet_x + int(moon_distance * math.cos(moon_angle))
         moon_y = planet_y + int(moon_distance * math.sin(moon_angle))

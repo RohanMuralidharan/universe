@@ -15,6 +15,7 @@ class Planet:
         self.moons = 0
         self.Moons = []
         self.gravity = 0.0
+        self.color = 0xff000000
 class starSystem:
     def __init__(self, x, y, z=f"ASTv{15}", generateFullSystem=False):
         self.x = x
