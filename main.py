@@ -153,9 +153,11 @@ def draw_star_info(selectedStar):
         panel.blit(planet_text, (planet_x - 10, planet_y + planet_size + 5))
 
         if planet_rect.collidepoint(mouse_x, mouse_y):
-            hoveredPlanet = planet  
+            hoveredPlanet = planet
+            hoveredPlanet_x = planet_x
+            hoveredPlanet_y = planet_y  
+            hoveredPlanet = planet
 
-    # **Planet Details (Bottom Left)**
     if hoveredPlanet:
         details_text = [
             f"Planet Details:",
@@ -164,6 +166,7 @@ def draw_star_info(selectedStar):
             f"Moons: {hoveredPlanet.moons}",
             f"Has Rings: {'Yes' if hasattr(hoveredPlanet, 'ring') and hoveredPlanet.ring else 'No'}"
         ]
+        pygame.draw.circle(panel, (255, 255, 255), (hoveredPlanet_x, hoveredPlanet_y), hoveredPlanet.diameter + 3, 2)
         y_offset = panel_height - 100  
         for line in details_text:
             detail_render = font.render(line, True, (255, 255, 255))
